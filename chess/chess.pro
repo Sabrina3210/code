@@ -9,13 +9,17 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    module/board.cpp \
     main.cpp \
-    mywidget.cpp
+    model/Board.cpp \
+    viewmodel/my_vm.cpp \
+    view/mywidget.cpp \
+    model/Stone.cpp
 
 HEADERS += \
-    module/board.h \
-    mywidget.h
+    model/Board.h \
+    viewmodel/my_vm.h \
+    view/mywidget.h \
+    model/Stone.h
 
 FORMS += \
     mywidget.ui

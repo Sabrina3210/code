@@ -1,5 +1,4 @@
 #include "mywidget.h"
-#include "board.h"
 #include <QApplication>
 #include <QLocale>
 #include <QTranslator>
@@ -17,9 +16,7 @@ int main(int argc, char *argv[])
             break;
         }
     }
-    board Board;
-    Board.show();
-//    MyWidget w;
-//    w.show();
+    MyWidget w;
+    w.show();
     return a.exec();
 }
