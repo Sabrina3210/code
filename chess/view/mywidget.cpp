@@ -14,9 +14,9 @@ MyWidget::~MyWidget()
 }
 void MyWidget::mouseReleaseEvent(QMouseEvent *ev)
 {
-    int x=ev->pos().x();
-    int y=ev->pos().y();
-     qDebug("Released at (%d, %d)", x/40, y/40);
+    double x=ev->pos().x()/40.0;
+    double y=ev->pos().y()/40.0;
+    qDebug("%lf %lf",x,y);
 }
 void MyWidget::paintEvent(QPaintEvent *)
 {
@@ -59,28 +59,28 @@ void MyWidget::paintEvent(QPaintEvent *)
     painter.drawLine(QPoint(d+dis,4*d+dis),QPoint(d+dis,4*d+dis+length));
     painter.drawLine(QPoint(d+dis,4*d+dis),QPoint(d+dis+length,4*d+dis));
 
-    painter.drawEllipse(d/2,3.5*d,d,d);
+
 
     painter.drawLine(QPoint(d+dis,7*d-dis-length),QPoint(d+dis,7*d-dis));
     painter.drawLine(QPoint(d+dis,7*d-dis),QPoint(d+dis+length,7*d-dis));
     painter.drawLine(QPoint(d+dis,7*d+dis),QPoint(d+dis,7*d+dis+length));
     painter.drawLine(QPoint(d+dis,7*d+dis),QPoint(d+dis+length,7*d+dis));
 
-    painter.drawEllipse(d/2,6.5*d,d,d);
+
 
     painter.drawLine(QPoint(9*d-dis,4*d-dis-length),QPoint(9*d-dis,4*d-dis));
     painter.drawLine(QPoint(9*d-dis,4*d-dis),QPoint(9*d-dis-length,4*d-dis));
     painter.drawLine(QPoint(9*d-dis,4*d+dis),QPoint(9*d-dis,4*d+dis+length));
     painter.drawLine(QPoint(9*d-dis,4*d+dis),QPoint(9*d-dis-length,4*d+dis));
 
-    painter.drawEllipse(8.5*d,3.5*d,d,d);
+
 
     painter.drawLine(QPoint(9*d-dis,7*d-dis-length),QPoint(9*d-dis,7*d-dis));
     painter.drawLine(QPoint(9*d-dis,7*d-dis),QPoint(9*d-dis-length,7*d-dis));
     painter.drawLine(QPoint(9*d-dis,7*d+dis),QPoint(9*d-dis,7*d+dis+length));
     painter.drawLine(QPoint(9*d-dis,7*d+dis),QPoint(9*d-dis-length,7*d+dis));
 
-    painter.drawEllipse(8.5*d,6.5*d,d,d);
+
 
     painter.drawLine(QPoint(2*d-dif,3*d-dis),QPoint(2*d-dif,3*d-dis-length));
     painter.drawLine(QPoint(2*d-dif,3*d-dis),QPoint(2*d-dis-length,3*d-dis));
@@ -91,7 +91,7 @@ void MyWidget::paintEvent(QPaintEvent *)
     painter.drawLine(QPoint(2*d+dif,3*d+dis),QPoint(2*d+dif,3*d+dis+length));
     painter.drawLine(QPoint(2*d+dif,3*d+dis),QPoint(2*d+dis+length,3*d+dis));
 
-    painter.drawEllipse(1.5*d,2.5*d,d,d);
+
 
     painter.drawLine(QPoint(2*d-dif,8*d-dis),QPoint(2*d-dif,8*d-dis-length));
     painter.drawLine(QPoint(2*d-dif,8*d-dis),QPoint(2*d-dis-length,8*d-dis));
@@ -102,7 +102,7 @@ void MyWidget::paintEvent(QPaintEvent *)
     painter.drawLine(QPoint(2*d+dif,8*d+dis),QPoint(2*d+dif,8*d+dis+length));
     painter.drawLine(QPoint(2*d+dif,8*d+dis),QPoint(2*d+dis+length,8*d+dis));
 
-    painter.drawEllipse(1.5*d,7.5*d,d,d);
+
 
     painter.drawLine(QPoint(3*d-dif,4*d-dis),QPoint(3*d-dif,4*d-dis-length));
     painter.drawLine(QPoint(3*d-dif,4*d-dis),QPoint(3*d-dis-length,4*d-dis));
@@ -113,7 +113,7 @@ void MyWidget::paintEvent(QPaintEvent *)
     painter.drawLine(QPoint(3*d+dif,4*d+dis),QPoint(3*d+dif,4*d+dis+length));
     painter.drawLine(QPoint(3*d+dif,4*d+dis),QPoint(3*d+dis+length,4*d+dis));
 
-    painter.drawEllipse(2.5*d,3.5*d,d,d);
+
 
     painter.drawLine(QPoint(3*d-dif,7*d-dis),QPoint(3*d-dif,7*d-dis-length));
     painter.drawLine(QPoint(3*d-dif,7*d-dis),QPoint(3*d-dis-length,7*d-dis));
@@ -124,7 +124,7 @@ void MyWidget::paintEvent(QPaintEvent *)
     painter.drawLine(QPoint(3*d+dif,7*d+dis),QPoint(3*d+dif,7*d+dis+length));
     painter.drawLine(QPoint(3*d+dif,7*d+dis),QPoint(3*d+dis+length,7*d+dis));
 
-    painter.drawEllipse(2.5*d,6.5*d,d,d);
+
 
     painter.drawLine(QPoint(5*d-dif,4*d-dis),QPoint(5*d-dif,4*d-dis-length));
     painter.drawLine(QPoint(5*d-dif,4*d-dis),QPoint(5*d-dis-length,4*d-dis));
@@ -135,7 +135,7 @@ void MyWidget::paintEvent(QPaintEvent *)
     painter.drawLine(QPoint(5*d+dif,4*d+dis),QPoint(5*d+dif,4*d+dis+length));
     painter.drawLine(QPoint(5*d+dif,4*d+dis),QPoint(5*d+dis+length,4*d+dis));
 
-    painter.drawEllipse(4.5*d,3.5*d,d,d);
+
 
     painter.drawLine(QPoint(5*d-dif,7*d-dis),QPoint(5*d-dif,7*d-dis-length));
     painter.drawLine(QPoint(5*d-dif,7*d-dis),QPoint(5*d-dis-length,7*d-dis));
@@ -146,7 +146,7 @@ void MyWidget::paintEvent(QPaintEvent *)
     painter.drawLine(QPoint(5*d+dif,7*d+dis),QPoint(5*d+dif,7*d+dis+length));
     painter.drawLine(QPoint(5*d+dif,7*d+dis),QPoint(5*d+dis+length,7*d+dis));
 
-    painter.drawEllipse(4.5*d,6.5*d,d,d);
+
 
     painter.drawLine(QPoint(7*d-dif,4*d-dis),QPoint(7*d-dif,4*d-dis-length));
     painter.drawLine(QPoint(7*d-dif,4*d-dis),QPoint(7*d-dis-length,4*d-dis));
@@ -157,7 +157,7 @@ void MyWidget::paintEvent(QPaintEvent *)
     painter.drawLine(QPoint(7*d+dif,4*d+dis),QPoint(7*d+dif,4*d+dis+length));
     painter.drawLine(QPoint(7*d+dif,4*d+dis),QPoint(7*d+dis+length,4*d+dis));
 
-    painter.drawEllipse(6.5*d,3.5*d,d,d);
+
 
     painter.drawLine(QPoint(7*d-dif,7*d-dis),QPoint(7*d-dif,7*d-dis-length));
     painter.drawLine(QPoint(7*d-dif,7*d-dis),QPoint(7*d-dis-length,7*d-dis));
@@ -168,7 +168,7 @@ void MyWidget::paintEvent(QPaintEvent *)
     painter.drawLine(QPoint(7*d+dif,7*d+dis),QPoint(7*d+dif,7*d+dis+length));
     painter.drawLine(QPoint(7*d+dif,7*d+dis),QPoint(7*d+dis+length,7*d+dis));
 
-    painter.drawEllipse(6.5*d,6.5*d,d,d);
+
 
     painter.drawLine(QPoint(3*d-dif,4*d-dis),QPoint(3*d-dif,4*d-dis-length));
     painter.drawLine(QPoint(3*d-dif,4*d-dis),QPoint(3*d-dis-length,4*d-dis));
@@ -179,7 +179,7 @@ void MyWidget::paintEvent(QPaintEvent *)
     painter.drawLine(QPoint(3*d+dif,4*d+dis),QPoint(3*d+dif,4*d+dis+length));
     painter.drawLine(QPoint(3*d+dif,4*d+dis),QPoint(3*d+dis+length,4*d+dis));
 
-    painter.drawEllipse(2.5*d,3.5*d,d,d);
+
 
     painter.drawLine(QPoint(8*d-dif,3*d-dis),QPoint(8*d-dif,3*d-dis-length));
     painter.drawLine(QPoint(8*d-dif,3*d-dis),QPoint(8*d-dis-length,3*d-dis));
@@ -190,7 +190,7 @@ void MyWidget::paintEvent(QPaintEvent *)
     painter.drawLine(QPoint(8*d+dif,3*d+dis),QPoint(8*d+dif,3*d+dis+length));
     painter.drawLine(QPoint(8*d+dif,3*d+dis),QPoint(8*d+dis+length,3*d+dis));
 
-    painter.drawEllipse(7.5*d,2.5*d,d,d);
+
 
     painter.drawLine(QPoint(8*d-dif,8*d-dis),QPoint(8*d-dif,8*d-dis-length));
     painter.drawLine(QPoint(8*d-dif,8*d-dis),QPoint(8*d-dis-length,8*d-dis));
@@ -202,6 +202,52 @@ void MyWidget::paintEvent(QPaintEvent *)
     painter.drawLine(QPoint(8*d+dif,8*d+dis),QPoint(8*d+dis+length,8*d+dis));
 
     //绘制棋子
+    for(int i=0;i<32;i++)
+        drawchess(painter,i);
+    QString text = "楚河";
+    QString text1 = "漢界";
+    QRect rect(d, 5*d, 4*d, d);
+    QRect rect1(5*d, 5*d, 4*d, d);
+    painter.drawText(rect, Qt::AlignCenter, text);
+    painter.drawText(rect1, Qt::AlignCenter, text1);
+}
+void MyWidget::drawchess(QPainter& painter,int id)
+{
+    //if(isDead(id)) return;
+
+//    QColor color;
+//    if(red(id)) color = Qt::red;
+//    else color = Qt::black;
+
+//    p.setPen(QPen(QBrush(color), 2));
+
+//    if(id == _selectid)
+//        p.setBrush(Qt::gray);
+//    else p.setBrush(Qt::yellow);
+
+//    p.drawEllipse(cell(id));
+
+//    p.setFont(QFont("system", _r*1.2, 700));
+//    p.drawText(cell(id), name(id), QTextOption(Qt::AlignCenter));
+    int d=40;
+    painter.drawEllipse(d/2,3.5*d,d,d);
+
+
+
+    painter.drawEllipse(d/2,3.5*d,d,d);
+    painter.drawEllipse(d/2,6.5*d,d,d);
+    painter.drawEllipse(8.5*d,3.5*d,d,d);
+    painter.drawEllipse(8.5*d,6.5*d,d,d);
+    painter.drawEllipse(1.5*d,2.5*d,d,d);
+    painter.drawEllipse(1.5*d,7.5*d,d,d);
+    painter.drawEllipse(2.5*d,3.5*d,d,d);
+    painter.drawEllipse(2.5*d,6.5*d,d,d);
+    painter.drawEllipse(4.5*d,3.5*d,d,d);
+    painter.drawEllipse(4.5*d,6.5*d,d,d);
+    painter.drawEllipse(6.5*d,3.5*d,d,d);
+    painter.drawEllipse(6.5*d,6.5*d,d,d);
+    painter.drawEllipse(2.5*d,3.5*d,d,d);
+    painter.drawEllipse(7.5*d,2.5*d,d,d);
     painter.drawEllipse(7.5*d,7.5*d,d,d);
     for(int i=1;i<=9;i++)
     {
@@ -304,10 +350,4 @@ void MyWidget::paintEvent(QPaintEvent *)
         QString chess = "士";
         painter.drawText(rect_chess, Qt::AlignCenter, chess);
     }
-    QString text = "楚河";
-    QString text1 = "漢界";
-    QRect rect(d, 5*d, 4*d, d);
-    QRect rect1(5*d, 5*d, 4*d, d);
-    painter.drawText(rect, Qt::AlignCenter, text);
-    painter.drawText(rect1, Qt::AlignCenter, text1);
 }

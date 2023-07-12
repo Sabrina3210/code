@@ -15,11 +15,11 @@ public:
     MyWidget(QWidget *parent = nullptr);
     ~MyWidget();
     void paintEvent(QPaintEvent *);
-    void drawchess(QPainter& p);
+    void drawchess(QPainter& p,int id);
     void mouseReleaseEvent(QMouseEvent *ev);
     //click click_t;
 private:
     Ui::MyWidget *ui;
-
+    //my_vm vm;
 };
 #endif // MYWIDGET_H

@@ -13,13 +13,17 @@ SOURCES += \
     model/Board.cpp \
     viewmodel/my_vm.cpp \
     view/mywidget.cpp \
-    model/Stone.cpp
+    model/Stone.cpp\
+    app/msapp.cpp\
+
 
 HEADERS += \
     model/Board.h \
     viewmodel/my_vm.h \
     view/mywidget.h \
-    model/Stone.h
+    model/Stone.h\
+    app/msapp.h\
+    common/etlbase.h
 
 FORMS += \
     mywidget.ui
