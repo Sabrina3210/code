@@ -10,20 +10,29 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
-    model/Board.cpp \
+    common/Board.cpp \
+    viewmodel/commands/click_command.cpp \
+    viewmodel/commands/moveStone.cpp \
     viewmodel/my_vm.cpp \
     view/mywidget.cpp \
-    model/Stone.cpp\
     app/msapp.cpp\
+    view/sink/SinkProperty.cpp\
+    viewmodel/sinks/my_vmsink.cpp\
+    model/my_model.cpp
 
 
 HEADERS += \
-    model/Board.h \
+    common/Board.h \
+    viewmodel/commands/click_command.h \
+    viewmodel/commands/moveStone.h \
     viewmodel/my_vm.h \
     view/mywidget.h \
-    model/Stone.h\
     app/msapp.h\
-    common/etlbase.h
+    common/etlbase.h\
+    view/sink/SinkProperty.h\
+    viewmodel/sinks/my_vmsink.h\
+    model/my_model.h
+
 
 FORMS += \
     mywidget.ui

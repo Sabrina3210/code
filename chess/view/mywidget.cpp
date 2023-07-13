@@ -1,22 +1,74 @@
 #include "mywidget.h"
 #include "qpainter.h"
 #include "ui_mywidget.h"
+
 MyWidget::MyWidget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::MyWidget)
 {
     ui->setupUi(this);
+
 }
 
 MyWidget::~MyWidget()
 {
     delete ui;
 }
+void MyWidget::set_board(const std:: shared_ptr<Board> b)
+{
+    this->board=b;
+}
 void MyWidget::mouseReleaseEvent(QMouseEvent *ev)
 {
-    double x=ev->pos().x()/40.0;
-    double y=ev->pos().y()/40.0;
-    qDebug("%lf %lf",x,y);
+    double x=ev->pos().x();
+    double y=ev->pos().y();
+    double row=x/40.0;
+    double col=y/40.0;
+    if(row>9.5||row<0.5||col>10.5||col<0.5)
+    {
+        qDebug()<<"error";
+        return;
+    }
+    for(int i=1;i<10;i++)
+    {
+        for(int j=1;j<11;j++)
+        {
+            double dis=(row-i)*(row-i)+(col-j)*(col-j);
+            if(dis<0.25)
+            {
+                row=i;
+                col=j;
+            }
+        }
+    }
+    int i;
+    for(i=0;i<32;i++)
+    {
+        if(board->getstone()[i]._row==row&&board->getstone()[i]._col==col)
+        {
+            board->select_id=i;
+            update();
+            break;
+            //qDebug()<<i;
+        }
+
+    }
+    if(i==32)
+        board->select_id=-1;
+    qDebug()<<board->select_id;
+    qDebug("%lf %lf",row,col);
+}
+void MyWidget::set_left_click_command(const std::shared_ptr<ICommandBase>& cmd)
+{
+    click_command=cmd;
+}
+void MyWidget::set_draw_chess_command(const std::shared_ptr<ICommandBase>& cmd)
+{
+
+}
+std::shared_ptr<IPropertyNotification> MyWidget::get_propertty_sink() throw()
+{
+    //return std::static_pointer_cast<IPropertyNotification>(m_sink_property);
 }
 void MyWidget::paintEvent(QPaintEvent *)
 {
@@ -204,6 +256,7 @@ void MyWidget::paintEvent(QPaintEvent *)
     //绘制棋子
     for(int i=0;i<32;i++)
         drawchess(painter,i);
+    painter.setPen(Qt::black);
     QString text = "楚河";
     QString text1 = "漢界";
     QRect rect(d, 5*d, 4*d, d);
@@ -221,133 +274,40 @@ void MyWidget::drawchess(QPainter& painter,int id)
 
 //    p.setPen(QPen(QBrush(color), 2));
 
-//    if(id == _selectid)
-//        p.setBrush(Qt::gray);
-//    else p.setBrush(Qt::yellow);
+
 
 //    p.drawEllipse(cell(id));
 
 //    p.setFont(QFont("system", _r*1.2, 700));
 //    p.drawText(cell(id), name(id), QTextOption(Qt::AlignCenter));
+//    painter.setPen(QPen(QBrush(Qt::yellow), 2));
+
+//    painter.drawEllipse(cell(id));
+
     int d=40;
-    painter.drawEllipse(d/2,3.5*d,d,d);
+    Stone* chess=board->getstone();
+     //qDebug("%d",board->chess[id]._id);
+    if(chess[id]._dead==true) return;
+    painter.drawEllipse((chess[id]._row-0.5)*d,(chess[id]._col-0.5)*d,d,d);
 
 
+    if(id == board->select_id)
+        painter.setBrush(Qt::gray);
+    else painter.setBrush(Qt::yellow);
 
-    painter.drawEllipse(d/2,3.5*d,d,d);
-    painter.drawEllipse(d/2,6.5*d,d,d);
-    painter.drawEllipse(8.5*d,3.5*d,d,d);
-    painter.drawEllipse(8.5*d,6.5*d,d,d);
-    painter.drawEllipse(1.5*d,2.5*d,d,d);
-    painter.drawEllipse(1.5*d,7.5*d,d,d);
-    painter.drawEllipse(2.5*d,3.5*d,d,d);
-    painter.drawEllipse(2.5*d,6.5*d,d,d);
-    painter.drawEllipse(4.5*d,3.5*d,d,d);
-    painter.drawEllipse(4.5*d,6.5*d,d,d);
-    painter.drawEllipse(6.5*d,3.5*d,d,d);
-    painter.drawEllipse(6.5*d,6.5*d,d,d);
-    painter.drawEllipse(2.5*d,3.5*d,d,d);
-    painter.drawEllipse(7.5*d,2.5*d,d,d);
-    painter.drawEllipse(7.5*d,7.5*d,d,d);
-    for(int i=1;i<=9;i++)
-    {
-        painter.drawEllipse(d*(i-0.5),0.5*d,d,d);
-    }
-    for(int i=1;i<=9;i++)
-    {
-        painter.drawEllipse(d*(i-0.5),9.5*d,d,d);
-    }
+    //painter.setBrush(QBrush(Qt::yellow)); // 使用红色填充
+    painter.setPen(Qt::NoPen); // 不画边框
+    painter.drawEllipse((chess[id]._row-0.5)*d,(chess[id]._col-0.5)*d,d,d);
+
     QFont font("Arial", 12); // 创建字体对象
     font.setPointSize(16); // 设置字体大小
     painter.setFont(font);
-    painter.setPen(Qt::red);
-    for(int i=1;i<=5;i++)
-    {
-        QRect rect_chess((2*i-1.5)*d,6.5*d,d,d);
-        QString chess = "兵";
-        painter.drawText(rect_chess, Qt::AlignCenter, chess);
-    }
-    for(int i=1;i<=2;i++)
-    {
-        QRect rect_chess((6*i-4.5)*d,7.5*d,d,d);
-        QString chess = "炮";
-        painter.drawText(rect_chess, Qt::AlignCenter, chess);
-    }
-    for(int i=1;i<=2;i++)
-    {
-        QRect rect_chess((8*i-7.5)*d,9.5*d,d,d);
-        QString chess = "车";
-        painter.drawText(rect_chess, Qt::AlignCenter, chess);
-    }
-    for(int i=1;i<=2;i++)
-    {
-        QRect rect_chess((6*i-4.5)*d,9.5*d,d,d);
-        QString chess = "馬";
-        painter.drawText(rect_chess, Qt::AlignCenter, chess);
-    }
-    for(int i=1;i<=2;i++)
-    {
-        QRect rect_chess((4*i-1.5)*d,9.5*d,d,d);
-        QString chess = "相";
-        painter.drawText(rect_chess, Qt::AlignCenter, chess);
-    }
-    for(int i=1;i<=2;i++)
-    {
-        QRect rect_chess((2*i+1.5)*d,9.5*d,d,d);
-        QString chess = "仕";
-        painter.drawText(rect_chess, Qt::AlignCenter, chess);
-    }
-    for(int i=1;i<=2;i++)
-    {
-        QString chess;
-        if(i==1)
-        {
-            painter.setPen(Qt::black);
-            chess= "将";
-        }
-        else
-        {
-            painter.setPen(Qt::red);
-            chess = "帅";
-        }
-        QRect rect_chess(4.5*d,(9*i-8.5)*d,d,d);
-        painter.drawText(rect_chess, Qt::AlignCenter, chess);
-    }
-    painter.setPen(Qt::black);
-    for(int i=1;i<=5;i++)
-    {
-        QRect rect_chess((2*i-1.5)*d,3.5*d,d,d);
-        QString chess = "卒";
-        painter.drawText(rect_chess, Qt::AlignCenter, chess);
-    }
-    for(int i=1;i<=2;i++)
-    {
-        QRect rect_chess((6*i-4.5)*d,2.5*d,d,d);
-        QString chess = "砲";
-        painter.drawText(rect_chess, Qt::AlignCenter, chess);
-    }
-    for(int i=1;i<=2;i++)
-    {
-        QRect rect_chess((8*i-7.5)*d,0.5*d,d,d);
-        QString chess = "車";
-        painter.drawText(rect_chess, Qt::AlignCenter, chess);
-    }
-    for(int i=1;i<=2;i++)
-    {
-        QRect rect_chess((6*i-4.5)*d,0.5*d,d,d);
-        QString chess = "马";
-        painter.drawText(rect_chess, Qt::AlignCenter, chess);
-    }
-    for(int i=1;i<=2;i++)
-    {
-        QRect rect_chess((4*i-1.5)*d,0.5*d,d,d);
-        QString chess = "象";
-        painter.drawText(rect_chess, Qt::AlignCenter, chess);
-    }
-    for(int i=1;i<=2;i++)
-    {
-        QRect rect_chess((2*i+1.5)*d,0.5*d,d,d);
-        QString chess = "士";
-        painter.drawText(rect_chess, Qt::AlignCenter, chess);
-    }
+    if(chess[id]._red)
+        painter.setPen(Qt::red);
+    else
+        painter.setPen(Qt::black);
+    QRect rect_chess((chess[id]._row-0.5)*d,(chess[id]._col-0.5)*d,d,d);
+    QString word = chess[id].name();
+    painter.drawText(rect_chess, Qt::AlignCenter, word);
+
 }

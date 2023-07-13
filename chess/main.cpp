@@ -17,6 +17,7 @@ int main(int argc, char *argv[])
         }
     }
     MyWidget w;
-    w.show();
+    msapp app;
+    app.Init(w);
     return a.exec();
 }

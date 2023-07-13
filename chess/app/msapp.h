@@ -3,7 +3,7 @@
 #include<QApplication>
 #include "../viewmodel/my_vm.h"
 #include "../view/mywidget.h"
-#include"../model/Board.h"
+#include"../model/my_model.h"
 ////////////////////////////////////////////////////////////////////////////////
 
 class msapp
@@ -16,7 +16,7 @@ public:
     void run();
 private:
     std::shared_ptr<my_vm>  ViewModel;
-    std::shared_ptr<Board>  Model;
-    MyWidget  widget;
+    std::shared_ptr<MyModel>  Model;
+    //MyWidget  widget;
 };
 #endif
