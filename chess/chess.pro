@@ -11,8 +11,7 @@ CONFIG += c++17
 SOURCES += \
     main.cpp \
     common/Board.cpp \
-    viewmodel/commands/click_command.cpp \
-    viewmodel/commands/moveStone.cpp \
+    viewmodel/commands/moveStoneCommand.cpp \
     viewmodel/my_vm.cpp \
     view/mywidget.cpp \
     app/msapp.cpp\
@@ -23,8 +22,7 @@ SOURCES += \
 
 HEADERS += \
     common/Board.h \
-    viewmodel/commands/click_command.h \
-    viewmodel/commands/moveStone.h \
+    viewmodel/commands/moveStoneCommand.h \
     viewmodel/my_vm.h \
     view/mywidget.h \
     app/msapp.h\

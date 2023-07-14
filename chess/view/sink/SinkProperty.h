@@ -3,17 +3,17 @@
 
 #include "../../common/etlbase.h"
 
-class MyWidget;
+class MainWidget;
 
 class SinkProperty : public IPropertyNotification
 {
 public:
-    SinkProperty(MyWidget* pW) throw();
+    SinkProperty(MainWidget* pW) throw();
 
     virtual void OnPropertyChanged(const std::string& str);
 
 private:
-    MyWidget* m_pW;
+    MainWidget* m_pW;
 };
 
 #endif // MAINWINDOWPROPERTYSINK_H

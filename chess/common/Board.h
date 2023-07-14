@@ -19,12 +19,8 @@ public:
 class Board{
 public:
     Board();
-    Board(const Board&) = delete;
-    Board& operator=(const Board&) = delete;
-    ~Board()noexcept;
-    void init();
+    ~Board();
     Stone* getstone();
-    int select_id;
 private:
     Stone chess[32];
 };

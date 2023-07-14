@@ -1,8 +1,11 @@
 #include"Board.h"
 Board::Board()
 {
-    for(int i=0;i<32;i++)
+    for(int i=0; i<32; ++i)
+    {
         chess[i].init(i);
+        chess[i]._id=i;
+    }
 }
 Board::~Board()
 {
@@ -11,15 +14,6 @@ Board::~Board()
 Stone* Board::getstone()
 {
     return chess;
-}
-void Board::init()
-{
-    for(int i=0; i<32; ++i)
-    {
-        chess[i].init(i);
-        chess[i]._id=i;
-    }
-    select_id = -1;
 }
 Stone::Stone()
 {

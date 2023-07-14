@@ -1,22 +1,19 @@
 #include"my_model.h"
 MyModel::MyModel()
 {
-
+    b=std::make_shared<Board>();
+    //b=source;
+    //b=std::make_shared<Board>();
 }
 std::shared_ptr<Board> MyModel::get_board()throw()
 {
     return b;
 }
-void MyModel::init_game()
+bool MyModel::movechess(int x,int y)
 {
-    b->init();
-}
-void MyModel::leftchess(int x,int y)
-{
-    int i;
-    for(i=0;i<32;i++)
-    {
+    //function
 
-    }
-    b->select_id=i;
+    std::string str="move";
+    Fire_OnPropertyChanged( str);
+    return true;
 }

@@ -1,8 +1,9 @@
-#include "mywidget.h"
 #include <QApplication>
 #include <QLocale>
 #include <QTranslator>
+//#include "view/mywidget.h"
 #include"./app/msapp.h"
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -16,8 +17,9 @@ int main(int argc, char *argv[])
             break;
         }
     }
-    MyWidget w;
+    MainWidget w;
     msapp app;
     app.Init(w);
+    //w.show();
     return a.exec();
 }

@@ -12,11 +12,8 @@ public:
     msapp();
     ~msapp() throw();
 
-    bool Init(MyWidget& w);
-    void run();
+    bool Init(MainWidget& w);
 private:
     std::shared_ptr<my_vm>  ViewModel;
-    std::shared_ptr<MyModel>  Model;
-    //MyWidget  widget;
 };
 #endif

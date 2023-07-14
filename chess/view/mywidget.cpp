@@ -2,23 +2,24 @@
 #include "qpainter.h"
 #include "ui_mywidget.h"
 
-MyWidget::MyWidget(QWidget *parent)
+MainWidget::MainWidget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::MyWidget)
 {
     ui->setupUi(this);
-
+    m_sink_property=std::make_shared<SinkProperty>(this) ;
+    select_id=-1;
 }
 
-MyWidget::~MyWidget()
+MainWidget::~MainWidget()
 {
     delete ui;
 }
-void MyWidget::set_board(const std:: shared_ptr<Board> b)
+void MainWidget::set_board(const std:: shared_ptr<Board> b)
 {
     this->board=b;
 }
-void MyWidget::mouseReleaseEvent(QMouseEvent *ev)
+void MainWidget::mouseReleaseEvent(QMouseEvent *ev)
 {
     double x=ev->pos().x();
     double y=ev->pos().y();
@@ -38,39 +39,41 @@ void MyWidget::mouseReleaseEvent(QMouseEvent *ev)
             {
                 row=i;
                 col=j;
+                break;
             }
         }
+    }
+    if(select_id!=-1)
+    {
+
     }
     int i;
     for(i=0;i<32;i++)
     {
         if(board->getstone()[i]._row==row&&board->getstone()[i]._col==col)
         {
-            board->select_id=i;
+            select_id=i;
             update();
             break;
             //qDebug()<<i;
         }
 
     }
-    if(i==32)
-        board->select_id=-1;
-    qDebug()<<board->select_id;
+//    if(i==32)
+//        board->select_id=-1;
+//    qDebug()<<board->select_id;
     qDebug("%lf %lf",row,col);
 }
-void MyWidget::set_left_click_command(const std::shared_ptr<ICommandBase>& cmd)
+void MainWidget::set_move_command(const std::shared_ptr<ICommandBase>& cmd)
 {
-    click_command=cmd;
+    move_command=cmd;
 }
-void MyWidget::set_draw_chess_command(const std::shared_ptr<ICommandBase>& cmd)
-{
 
-}
-std::shared_ptr<IPropertyNotification> MyWidget::get_propertty_sink() throw()
+std::shared_ptr<IPropertyNotification> MainWidget::get_propertty_sink() throw()
 {
-    //return std::static_pointer_cast<IPropertyNotification>(m_sink_property);
+    return std::static_pointer_cast<IPropertyNotification>(m_sink_property);
 }
-void MyWidget::paintEvent(QPaintEvent *)
+void MainWidget::paintEvent(QPaintEvent *)
 {
     QPainter painter(this);
     //画10横线
@@ -264,26 +267,8 @@ void MyWidget::paintEvent(QPaintEvent *)
     painter.drawText(rect, Qt::AlignCenter, text);
     painter.drawText(rect1, Qt::AlignCenter, text1);
 }
-void MyWidget::drawchess(QPainter& painter,int id)
+void MainWidget::drawchess(QPainter& painter,int id)
 {
-    //if(isDead(id)) return;
-
-//    QColor color;
-//    if(red(id)) color = Qt::red;
-//    else color = Qt::black;
-
-//    p.setPen(QPen(QBrush(color), 2));
-
-
-
-//    p.drawEllipse(cell(id));
-
-//    p.setFont(QFont("system", _r*1.2, 700));
-//    p.drawText(cell(id), name(id), QTextOption(Qt::AlignCenter));
-//    painter.setPen(QPen(QBrush(Qt::yellow), 2));
-
-//    painter.drawEllipse(cell(id));
-
     int d=40;
     Stone* chess=board->getstone();
      //qDebug("%d",board->chess[id]._id);
@@ -291,7 +276,7 @@ void MyWidget::drawchess(QPainter& painter,int id)
     painter.drawEllipse((chess[id]._row-0.5)*d,(chess[id]._col-0.5)*d,d,d);
 
 
-    if(id == board->select_id)
+    if(id == select_id)
         painter.setBrush(Qt::gray);
     else painter.setBrush(Qt::yellow);
 
