@@ -21,9 +21,9 @@ std::shared_ptr<Board> my_vm::get_board()
 {
     return Model->get_board();
 }
-bool my_vm::movechess(int x,int y,int id)
+bool my_vm::movechess(int x,int y)
 {
-    return Model->movechess(x,y,id);
+    return Model->movechess(x,y);
 }
 std::shared_ptr<IPropertyNotification> my_vm::get_propertty_sink() throw()
 {

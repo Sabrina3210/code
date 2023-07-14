@@ -23,6 +23,7 @@ public:
     Stone* getstone();
 private:
     Stone chess[32];
+    bool IfChineseChess;
 };
 
 #endif

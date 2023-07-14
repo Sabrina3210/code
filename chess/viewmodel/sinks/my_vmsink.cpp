@@ -7,5 +7,5 @@ ViewModelSink::ViewModelSink(my_vm* p) throw():m_pVM(p)
 
 void ViewModelSink::OnPropertyChanged(const std::string &str)
 {
-    m_pVM->Fire_OnPropertyChanged(str);
+    //m_pVM->Fire_OnPropertyChanged(str);
 }

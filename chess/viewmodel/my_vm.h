@@ -13,7 +13,7 @@ public:
     void set_model(std::shared_ptr<MyModel> b);
 
     std::shared_ptr<ICommandBase> get_move_command() throw();
-    bool movechess(int x,int y,int id);
+    bool movechess(int x,int y);
     std::shared_ptr<IPropertyNotification> get_propertty_sink() throw();
 private:
     std::shared_ptr<MyModel> Model;

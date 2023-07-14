@@ -1,7 +1,7 @@
 #include "mywidget.h"
 #include "qpainter.h"
 #include "ui_mywidget.h"
-#include"..//common/parameter.h"
+
 MainWidget::MainWidget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::MyWidget)
@@ -45,30 +45,20 @@ void MainWidget::mouseReleaseEvent(QMouseEvent *ev)
     }
     if(select_id!=-1)
     {
-        std::any param1 (std::make_any<DesParameter>());
-        DesParameter& ts= std::any_cast<DesParameter&>(param1);
-        ts.row = row;
-        ts.col = col;
-        ts.select_id = select_id;
 
-        move_command->SetParameter(param1);
-        move_command->Exec();
-        select_id=-1;
     }
-    else{
-        int i;
-        for(i=0;i<32;i++)
+    int i;
+    for(i=0;i<32;i++)
+    {
+        if(board->getstone()[i]._row==row&&board->getstone()[i]._col==col)
         {
-            if(board->getstone()[i]._row==row&&board->getstone()[i]._col==col)
-            {
-                select_id=i;
-                update();
-                break;
-            }
-
+            select_id=i;
+            update();
+            break;
+            //qDebug()<<i;
         }
-    }
 
+    }
 //    if(i==32)
 //        board->select_id=-1;
 //    qDebug()<<board->select_id;
