@@ -9,7 +9,7 @@ public:
     MyModel();
     std::shared_ptr<Board> get_board() throw();
     //provide interface of functions
-    bool movechess(int x,int y);
+    bool movechess(int x,int y,int id);
 //    bool restart(int row, int col, int boom_num);
 //    bool leftblock(int x_pos, int y_pos);
 //    bool rightblock(int x_pos, int y_pos);
