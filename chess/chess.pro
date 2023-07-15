@@ -13,9 +13,11 @@ SOURCES += \
     main.cpp \
     common/Board.cpp \
     view/mymainwindow.cpp \
+    viewmodel/commands/backcommand.cpp \
     viewmodel/commands/flipoverChessCommand.cpp \
     viewmodel/commands/moveStoneCommand.cpp \
     viewmodel/commands/moveStoneCommand_f.cpp \
+    viewmodel/commands/restartcommand.cpp \
     viewmodel/my_vm.cpp \
     view/mywidget.cpp \
     app/msapp.cpp\
@@ -29,10 +31,13 @@ SOURCES += \
 HEADERS += \
     common/Board.h \
     common/parameter.h \
+    common/step.h \
     view/mymainwindow.h \
+    viewmodel/commands/backcommand.h \
     viewmodel/commands/flipoverChessCommand.h \
     viewmodel/commands/moveStoneCommand.h \
     viewmodel/commands/moveStoneCommand_f.h \
+    viewmodel/commands/restartcommand.h \
     viewmodel/my_vm.h \
     view/mywidget.h \
     app/msapp.h\

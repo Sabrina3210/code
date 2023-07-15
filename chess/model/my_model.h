@@ -2,23 +2,8 @@
 #define MY_MODEL_H
 #include"../common/etlbase.h"
 #include"../common/Board.h"
-<<<<<<< HEAD
-
-class step_record
-{
-public:
-    int start_id;
-    int end_id;
-    int st_x;
-    int st_y;
-    int ed_x;
-    int ed_y;
-    bool camp;
-};
-
-=======
 #include"../common/F_Board.h"
->>>>>>> f614c42109605f762f3b913ba3369ea0b19831d4
+
 class MyModel : public Proxy_CommandNotification<MyModel>, public Proxy_PropertyNotification<MyModel>
 {
 public:
@@ -29,17 +14,16 @@ public:
     bool movechess(int ed_x,int ed_y, int select_id);
     bool flipoverchess(int select_id);
     bool movechess_f(int ed_x,int ed_y, int select_id);
+    bool restart();
+    bool RecoverLastStep();
     //    bool restart(int row, int col, int boom_num);
     //    bool leftblock(int x_pos, int y_pos);
     //    bool rightblock(int x_pos, int y_pos);
 private:
     std::shared_ptr<Board> b;
-<<<<<<< HEAD
     std::vector<step_record> record;
-=======
     std::shared_ptr<F_Board> f;
-    bool now_camp_red = true;
->>>>>>> f614c42109605f762f3b913ba3369ea0b19831d4
+
     bool CanMoveJiang(int st_x, int st_y, int ed_x, int ed_y, bool IsRed);
     bool CanMoveShi(int st_x, int st_y, int ed_x, int ed_y, bool IsRed);
     bool CanMoveXiang(int st_x, int st_y, int ed_x, int ed_y, bool IsRed);
@@ -55,19 +39,14 @@ private:
     bool IfPosInBoard(int pos_x, int pos_y);
     bool IfPosInSudoku(int pos_x, int pos_y, bool IsRed);
     bool IfPosInOwnCamp(int pos_x, int pos_y, bool IsRed);
-<<<<<<< HEAD
-    void RecoverLastStep();
-=======
+
 
     bool F_Can_Move_Pao(int st_x, int st_y, int ed_x, int ed_y, bool IsRed);
-
     bool F_Can_Move_Chess(int st_x, int st_y, int ed_x, int ed_y, bool IsRed);
-
     int F_StoneInPos(int pos_x, int pos_y);
     int F_NumChessPassBy(int st_x, int st_y, int ed_x, int ed_y);
     int F_PosChange(int st_x, int st_y, int ed_x, int ed_y);
     bool F_IfPosInBoard(int pos_x, int pos_y);
->>>>>>> f614c42109605f762f3b913ba3369ea0b19831d4
 };
 
 #endif // MSDATAMODEL_H

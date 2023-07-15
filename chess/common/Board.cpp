@@ -6,10 +6,20 @@ Board::Board()
         chess[i].init(i);
         chess[i]._id=i;
     }
+    now_camp_is_red = true;
 }
 Board::~Board()
 {
 
+}
+void Board::init()
+{
+    for(int i=0; i<32; ++i)
+    {
+        chess[i].init(i);
+        chess[i]._id=i;
+    }
+    now_camp_is_red = true;
 }
 Stone* Board::getstone()
 {

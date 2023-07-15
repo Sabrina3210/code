@@ -1,6 +1,7 @@
 #ifndef BOARD_H
 #define BOARD_H
 #include<QString>
+#include"../common/step.h"
 class Stone{
 public:
     Stone();
@@ -22,6 +23,7 @@ public:
     ~Board();
     bool now_camp_is_red = true;
     Stone* getstone();
+    void init();
 private:
     Stone chess[32];
 };

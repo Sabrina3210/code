@@ -1,6 +1,7 @@
 #ifndef F_BOARD_H
 #define F_BOARD_H
 #include<QString>
+#include"../common/step.h"
 class F_Stone{
 public:
     F_Stone();

@@ -255,13 +255,14 @@ bool MyModel::movechess(int ed_x,int ed_y, int select_id)
         std::string str="move";
         Fire_OnPropertyChanged( str);
         now_camp_red = !now_camp_red;
-        if(JudgeWin() == 1)
+        int j = JudgeWin();
+        if(j == 1)
         {
             std::string win_str="red_win";
             Fire_OnPropertyChanged(win_str);
 
         }
-        else if(JudgeWin() == -1)
+        else if(j == -1)
         {
             std::string win_str="black_win";
             Fire_OnPropertyChanged(win_str);
@@ -303,12 +304,12 @@ int MyModel::JudgeWin()
         {
             if(!st._red)
             {
-                std::cout << "red_win" << std::endl;
+                //std::cout << "red_win" << std::endl;
                 return 1;
             }
             else
             {
-                std::cout << "black_win" << std::endl;
+                //std::cout << "black_win" << std::endl;
                 return -1;
             }
         }
@@ -547,32 +548,39 @@ bool MyModel::CanMoveBing(int st_x, int st_y, int ed_x, int ed_y, bool IsRed)
     }
     return false;
 }
-<<<<<<< HEAD
 
-void MyModel::RecoverLastStep()
+bool MyModel::RecoverLastStep()
 {
+    //std::cout << 0;
     if(record.size() == 0)
-        return ;
+        return false;
     step_record last_step = record[record.size() - 1];
     record.pop_back();
     b->now_camp_is_red = last_step.camp;
     if(last_step.start_id >= 0)
     {
-        Stone st_stone = b->getstone()[last_step.start_id];
+        //std::cout << 1;
+        Stone &st_stone = b->getstone()[last_step.start_id];
         st_stone._row = last_step.st_x;
         st_stone._col = last_step.st_y;
     }
     if(last_step.end_id >= 0)
     {
-        Stone ed_stone = b->getstone()[last_step.start_id];
+        //std::cout << 5;
+        Stone &ed_stone = b->getstone()[last_step.end_id];
         ed_stone._dead = false;
         ed_stone._row = last_step.ed_x;
         ed_stone._col = last_step.ed_y;
     }
-=======
+    std::string back_str="back";
+    Fire_OnPropertyChanged(back_str);
+    return true;
+}
+
 bool MyModel::movechess_f(int ed_x,int ed_y, int select_id)
 {
     //function
+    bool &now_camp_red = b->now_camp_is_red;
     F_Stone &now_stone = f->getstone()[select_id];
     int st_x = now_stone._row;
     int st_y = now_stone._col;
@@ -837,7 +845,14 @@ bool MyModel::movechess_f(int ed_x,int ed_y, int select_id)
     }
     return false;
 }
-
+bool MyModel::restart()
+{
+    b->init();
+    record.clear();
+    std::string str="restart";
+    Fire_OnPropertyChanged( str);
+    return true;
+}
 int MyModel::F_StoneInPos(int pos_x, int pos_y)
 {
     // 返回当前坐标位置的棋子下标，没有返回-1
@@ -936,5 +951,4 @@ bool MyModel::F_Can_Move_Chess(int st_x, int st_y, int ed_x, int ed_y, bool IsRe
         }
     }
     return false;
->>>>>>> f614c42109605f762f3b913ba3369ea0b19831d4
 }

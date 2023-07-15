@@ -22,7 +22,8 @@ bool msapp::Init(MainWidget& w)
     w.set_move_command(ViewModel->get_move_command());
     w.set_flip_over_command(ViewModel->get_flipover_command());
     w.set_move_command_f(ViewModel->get_move_command_f());
-
+    w.set_restart_command(ViewModel->get_restart_command());
+    w.set_back_command(ViewModel->get_back_command());
 
     // notifications
     Model->AddPropertyNotification(ViewModel->get_propertty_sink());

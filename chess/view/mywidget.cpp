@@ -7,18 +7,26 @@ MainWidget::MainWidget(QWidget *parent)
     , ui(new Ui::MyWidget)
 {
     ui->setupUi(this);
-    m_sink_property=std::make_shared<SinkProperty>(this) ;
-    this->back_button = new QPushButton("悔棋",this);
-    this->close_button = new QPushButton("结束游戏",this);
-    this->back_button->setGeometry(width() * 4 / 5, height() / 2 - 50, 100, 40);
-    this->close_button->setGeometry(width() * 4 / 5, height() / 2 + 50, 100, 40);
-    connect(this->back_button, &QPushButton::clicked, [=]{
-        //
-    });
-    connect(this->close_button, &QPushButton::clicked, [=]{
-        // init
-        this->close();
-    });
+    m_sink_property=std::make_shared<SinkProperty>(this);
+    //if(game_type)
+    //{
+        setMaximumSize(10000, 8000);
+        this->back_button = new QPushButton("悔棋",this);
+        this->restart_button = new QPushButton("重启",this);
+        this->close_button = new QPushButton("结束游戏",this);
+        this->back_button->setGeometry(width() * 4 / 5, height() / 2 - 50, 100, 40);
+        this->restart_button->setGeometry(width() * 4 / 5, height() / 2, 100, 40);
+        this->close_button->setGeometry(width() * 4 / 5, height() / 2 + 50, 100, 40);
+        connect(this->back_button, &QPushButton::clicked, [=]{
+            back_command->Exec();
+        });
+        connect(this->restart_button, &QPushButton::clicked, [=]{
+            restart_command->Exec();
+        });
+        connect(this->close_button, &QPushButton::clicked, [=]{
+            this->close();
+        });
+
     select_id=-1;
     game_type=false;
 }
@@ -90,7 +98,7 @@ void MainWidget::mouseReleaseEvent(QMouseEvent *ev)
 
             }
         }
-        qDebug("%lf %lf",row,col);
+        //qDebug("%lf %lf",row,col);
     }
     else
     {
@@ -171,6 +179,14 @@ void MainWidget::set_move_command_f(const std::shared_ptr<ICommandBase>& cmd)
 {
     move_command_f=cmd;
 }
+void MainWidget::set_restart_command(const std::shared_ptr<ICommandBase>& cmd)
+{
+    restart_command=cmd;
+}
+void MainWidget::set_back_command(const std::shared_ptr<ICommandBase>& cmd)
+{
+    back_command=cmd;
+}
 std::shared_ptr<IPropertyNotification> MainWidget::get_propertty_sink() throw()
 {
     return std::static_pointer_cast<IPropertyNotification>(m_sink_property);
@@ -178,8 +194,21 @@ std::shared_ptr<IPropertyNotification> MainWidget::get_propertty_sink() throw()
 void MainWidget::paintEvent(QPaintEvent *)
 {
     QPainter painter(this);
-    this->back_button->setGeometry(width() * 4 / 5, height() / 2 - 50, 100, 40);
-    this->close_button->setGeometry(width() * 4 / 5, height() / 2 + 50, 100, 40);
+    if(game_type)
+    {
+        this->setMaximumSize(10000, 8000);
+        this->back_button->show();
+        this->back_button->setGeometry(width() * 4 / 5, height() / 2 - 50, 100, 40);
+        this->restart_button->setGeometry(width() * 4 / 5, height() / 2, 100, 40);
+        this->close_button->setGeometry(width() * 4 / 5, height() / 2 + 50, 100, 40);
+    }
+    else
+    {
+        this->setMaximumSize(1000, 800);
+        this->back_button->hide();
+        this->restart_button->setGeometry(width() * 4 / 5, height() / 2 - 50, 100, 40);
+        this->close_button->setGeometry(width() * 4 / 5, height() / 2 + 50, 100, 40);
+    }
     //画10横线
     int d = this->height() / 11;
     if(game_type)

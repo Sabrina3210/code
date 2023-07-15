@@ -1,7 +1,9 @@
 #ifndef SINKPROPERTY_H
 #define SINKPROPERTY_H
 
+#include <QMessageBox>
 #include "../../common/etlbase.h"
+
 
 class MainWidget;
 
