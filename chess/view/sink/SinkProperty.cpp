@@ -10,11 +10,11 @@ void SinkProperty::OnPropertyChanged(const std::string& str)
     {
         m_pW->update();
     }
-//    if( str == "win" )
-//    {
-//        m_pW->update();
-//        //m_pW->show_win();
-//    }
+    if( str == "move_f" )
+    {
+        m_pW->update();
+        //m_pW->show_win();
+    }
 //    if( str == "lose")
 //    {
 //        m_pW->update();
