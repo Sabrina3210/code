@@ -1,0 +1,12 @@
+release/funnychess.o
+release/main.o
+release/Board.o
+release/moveStoneCommand.o
+release/my_vm.o
+release/mywidget.o
+release/msapp.o
+release/SinkProperty.o
+release/my_vmsink.o
+release/my_model.o
+release/qrc_qmake_qmake_qm_files.o
+release/moc_mywidget.o

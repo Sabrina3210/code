@@ -1,0 +1,12 @@
+debug/funnychess.o
+debug/main.o
+debug/Board.o
+debug/moveStoneCommand.o
+debug/my_vm.o
+debug/mywidget.o
+debug/msapp.o
+debug/SinkProperty.o
+debug/my_vmsink.o
+debug/my_model.o
+debug/qrc_qmake_qmake_qm_files.o
+debug/moc_mywidget.o
