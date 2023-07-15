@@ -19,11 +19,22 @@ bool MyModel::movechess(int ed_x,int ed_y, int select_id)
     int st_y = now_stone._col;
     int now_type = now_stone._type;
     bool IsRed = now_stone._red;
+    bool &now_camp_red = b->now_camp_is_red;
     if(IsRed != now_camp_red)
         return false;
     int end_index = StoneInPos(ed_x, ed_y);
     Stone &end_stone = b->getstone()[end_index];
     bool flag = false;
+
+    step_record new_record;
+    new_record.camp = now_camp_red;
+    new_record.start_id = select_id;
+    new_record.end_id = end_index;
+    new_record.st_x = st_x;
+    new_record.st_y = st_y;
+    new_record.ed_x = ed_x;
+    new_record.ed_y = ed_y;
+    record.push_back(new_record);
 
     switch (now_type)
     {
@@ -255,10 +266,13 @@ bool MyModel::movechess(int ed_x,int ed_y, int select_id)
         {
 
         }
+//        int i = record.size() - 1;
+//        std::cout << record[i].camp << " " << record[i].start_id << " " << record[i].st_x << " " << record[i].st_y << " " << record[i].end_id << " " << record[i].ed_x << " " << record[i].ed_y << " " << std::endl;
         return true;
     }
     else
     {
+        record.pop_back();
         return false;
     }
 }
@@ -515,4 +529,26 @@ bool MyModel::CanMoveBing(int st_x, int st_y, int ed_x, int ed_y, bool IsRed)
         }
     }
     return false;
+}
+
+void MyModel::RecoverLastStep()
+{
+    if(record.size() == 0)
+        return ;
+    step_record last_step = record[record.size() - 1];
+    record.pop_back();
+    b->now_camp_is_red = last_step.camp;
+    if(last_step.start_id >= 0)
+    {
+        Stone st_stone = b->getstone()[last_step.start_id];
+        st_stone._row = last_step.st_x;
+        st_stone._col = last_step.st_y;
+    }
+    if(last_step.end_id >= 0)
+    {
+        Stone ed_stone = b->getstone()[last_step.start_id];
+        ed_stone._dead = false;
+        ed_stone._row = last_step.ed_x;
+        ed_stone._col = last_step.ed_y;
+    }
 }

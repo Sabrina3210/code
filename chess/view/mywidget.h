@@ -5,7 +5,6 @@
 #include<QMouseEvent>
 #include <QPushButton>
 #include"../common/etlbase.h"
-
 #include"../common/Board.h"
 
 QT_BEGIN_NAMESPACE

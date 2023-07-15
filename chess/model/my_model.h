@@ -3,6 +3,18 @@
 #include"../common/etlbase.h"
 #include"../common/Board.h"
 
+class step_record
+{
+public:
+    int start_id;
+    int end_id;
+    int st_x;
+    int st_y;
+    int ed_x;
+    int ed_y;
+    bool camp;
+};
+
 class MyModel : public Proxy_CommandNotification<MyModel>, public Proxy_PropertyNotification<MyModel>
 {
 public:
@@ -15,7 +27,7 @@ public:
     //    bool rightblock(int x_pos, int y_pos);
 private:
     std::shared_ptr<Board> b;
-    bool now_camp_red = true;
+    std::vector<step_record> record;
     bool CanMoveJiang(int st_x, int st_y, int ed_x, int ed_y, bool IsRed);
     bool CanMoveShi(int st_x, int st_y, int ed_x, int ed_y, bool IsRed);
     bool CanMoveXiang(int st_x, int st_y, int ed_x, int ed_y, bool IsRed);
@@ -31,7 +43,7 @@ private:
     bool IfPosInBoard(int pos_x, int pos_y);
     bool IfPosInSudoku(int pos_x, int pos_y, bool IsRed);
     bool IfPosInOwnCamp(int pos_x, int pos_y, bool IsRed);
-
+    void RecoverLastStep();
 };
 
 #endif // MSDATAMODEL_H

@@ -20,6 +20,7 @@ class Board{
 public:
     Board();
     ~Board();
+    bool now_camp_is_red = true;
     Stone* getstone();
 private:
     Stone chess[32];
