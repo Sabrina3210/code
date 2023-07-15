@@ -2,6 +2,7 @@
 #define MYMAINWINDOW_H
 
 #include <QWidget>
+#include <QPushButton>
 #include "view/mywidget.h"
 
 QT_BEGIN_NAMESPACE
@@ -17,7 +18,7 @@ class MyMainWindow : public QWidget
 public:
     explicit MyMainWindow(QWidget *parent = nullptr);
     ~MyMainWindow();
-        MainWidget  chess_board;
+    MainWidget  chess_board;
 private:
     Ui::MyMainWindow *ui;
 };

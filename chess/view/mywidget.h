@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include<QMouseEvent>
+#include <QPushButton>
 #include"../common/etlbase.h"
 
 #include"../common/Board.h"
@@ -32,6 +33,8 @@ public:
     //click click_t;
 private:
     Ui::MyWidget *ui;
+    QPushButton * back_button;
+    QPushButton * close_button;
     std::shared_ptr<ICommandBase> move_command;
     std::shared_ptr<Board> board;
     std::shared_ptr<SinkProperty> m_sink_property;

@@ -8,12 +8,25 @@ MainWidget::MainWidget(QWidget *parent)
 {
     ui->setupUi(this);
     m_sink_property=std::make_shared<SinkProperty>(this) ;
+    this->back_button = new QPushButton("悔棋",this);
+    this->close_button = new QPushButton("结束游戏",this);
+    this->back_button->setGeometry(width() * 4 / 5, height() / 2 - 50, 100, 40);
+    this->close_button->setGeometry(width() * 4 / 5, height() / 2 + 50, 100, 40);
+    connect(this->back_button, &QPushButton::clicked, [=]{
+        //
+    });
+    connect(this->close_button, &QPushButton::clicked, [=]{
+        // init
+        this->close();
+    });
     select_id=-1;
 }
 
 MainWidget::~MainWidget()
 {
     delete ui;
+    delete back_button;
+    delete close_button;
 }
 void MainWidget::set_board(const std:: shared_ptr<Board> b)
 {
@@ -88,6 +101,8 @@ std::shared_ptr<IPropertyNotification> MainWidget::get_propertty_sink() throw()
 void MainWidget::paintEvent(QPaintEvent *)
 {
     QPainter painter(this);
+    this->back_button->setGeometry(width() * 4 / 5, height() / 2 - 50, 100, 40);
+    this->close_button->setGeometry(width() * 4 / 5, height() / 2 + 50, 100, 40);
     //画10横线
     int d = this->height() / 11;
     for(int i=1;i<11;i++)
