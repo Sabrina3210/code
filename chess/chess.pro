@@ -13,27 +13,34 @@ SOURCES += \
     main.cpp \
     common/Board.cpp \
     view/mymainwindow.cpp \
+    viewmodel/commands/flipoverChessCommand.cpp \
     viewmodel/commands/moveStoneCommand.cpp \
+    viewmodel/commands/moveStoneCommand_f.cpp \
     viewmodel/my_vm.cpp \
     view/mywidget.cpp \
     app/msapp.cpp\
     view/sink/SinkProperty.cpp\
     viewmodel/sinks/my_vmsink.cpp\
-    model/my_model.cpp
+    model/my_model.cpp\
+    common/F_Board.cpp
+
 
 
 HEADERS += \
     common/Board.h \
     common/parameter.h \
     view/mymainwindow.h \
+    viewmodel/commands/flipoverChessCommand.h \
     viewmodel/commands/moveStoneCommand.h \
+    viewmodel/commands/moveStoneCommand_f.h \
     viewmodel/my_vm.h \
     view/mywidget.h \
     app/msapp.h\
     common/etlbase.h\
     view/sink/SinkProperty.h\
     viewmodel/sinks/my_vmsink.h\
-    model/my_model.h
+    model/my_model.h\
+    common/F_Board.h
 
 
 FORMS += \
