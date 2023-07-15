@@ -1,7 +1,7 @@
 #include "mywidget.h"
 #include "qpainter.h"
 #include "ui_mywidget.h"
-
+#include"..//common/parameter.h"
 MainWidget::MainWidget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::MyWidget)
@@ -21,13 +21,14 @@ void MainWidget::set_board(const std:: shared_ptr<Board> b)
 }
 void MainWidget::mouseReleaseEvent(QMouseEvent *ev)
 {
+    int d = this->height() / 11;
     double x=ev->pos().x();
     double y=ev->pos().y();
-    double row=x/40.0;
-    double col=y/40.0;
+    double row=x/d;
+    double col=y/d;
     if(row>9.5||row<0.5||col>10.5||col<0.5)
     {
-        qDebug()<<"error";
+        //qDebug()<<"error";
         return;
     }
     for(int i=1;i<10;i++)
@@ -45,20 +46,31 @@ void MainWidget::mouseReleaseEvent(QMouseEvent *ev)
     }
     if(select_id!=-1)
     {
+        std::any param1 (std::make_any<DesParameter>());
+        DesParameter& ts= std::any_cast<DesParameter&>(param1);
+        ts.row = row;
+        ts.col = col;
+        ts.select_id = select_id;
 
+        move_command->SetParameter(param1);
+        move_command->Exec();
+        select_id=-1;
+        update();
     }
-    int i;
-    for(i=0;i<32;i++)
-    {
-        if(board->getstone()[i]._row==row&&board->getstone()[i]._col==col)
+    else{
+        int i;
+        for(i=0;i<32;i++)
         {
-            select_id=i;
-            update();
-            break;
-            //qDebug()<<i;
-        }
+            if(board->getstone()[i]._row==row&&board->getstone()[i]._col==col)
+            {
+                select_id=i;
+                update();
+                break;
+            }
 
+        }
     }
+
 //    if(i==32)
 //        board->select_id=-1;
 //    qDebug()<<board->select_id;
@@ -77,7 +89,7 @@ void MainWidget::paintEvent(QPaintEvent *)
 {
     QPainter painter(this);
     //画10横线
-    int d=40;
+    int d = this->height() / 11;
     for(int i=1;i<11;i++)
     {
         painter.drawLine(QPoint(d,i*d),QPoint(9*d,i*d));
@@ -269,7 +281,7 @@ void MainWidget::paintEvent(QPaintEvent *)
 }
 void MainWidget::drawchess(QPainter& painter,int id)
 {
-    int d=40;
+    int d = this->height() / 11;
     Stone* chess=board->getstone();
      //qDebug("%d",board->chess[id]._id);
     if(chess[id]._dead==true) return;

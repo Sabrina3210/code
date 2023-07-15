@@ -9,9 +9,10 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    common/funnychess.cpp \
+    common/parameter.cpp \
     main.cpp \
     common/Board.cpp \
+    view/mymainwindow.cpp \
     viewmodel/commands/moveStoneCommand.cpp \
     viewmodel/my_vm.cpp \
     view/mywidget.cpp \
@@ -23,7 +24,8 @@ SOURCES += \
 
 HEADERS += \
     common/Board.h \
-    common/funnychess.h \
+    common/parameter.h \
+    view/mymainwindow.h \
     viewmodel/commands/moveStoneCommand.h \
     viewmodel/my_vm.h \
     view/mywidget.h \
@@ -35,6 +37,7 @@ HEADERS += \
 
 
 FORMS += \
+    mymainwindow.ui \
     mywidget.ui
 
 TRANSLATIONS += \
@@ -46,3 +49,6 @@ CONFIG += embed_translations
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    picture.qrc

@@ -26,10 +26,10 @@ bool msapp::Init(MainWidget& w)
 
 //    // notifications
     Model->AddPropertyNotification(ViewModel->get_propertty_sink());
-   // ViewModel->AddPropertyNotification(w.get_propertty_sink());
+    ViewModel->AddPropertyNotification(w.get_propertty_sink());
     w.setWindowTitle("Chinese chess");
     //widget.init();
-    w.show();
+    //w.show();
     return true;
 }
 

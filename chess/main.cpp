@@ -2,6 +2,7 @@
 #include <QLocale>
 #include <QTranslator>
 //#include "view/mywidget.h"
+#include "view/mymainwindow.h"
 #include"./app/msapp.h"
 
 int main(int argc, char *argv[])
@@ -17,9 +18,11 @@ int main(int argc, char *argv[])
             break;
         }
     }
-    MainWidget w;
+    MyMainWindow main_window;
+    main_window.show();
+//    MainWidget w;
     msapp app;
-    app.Init(w);
+    app.Init(main_window.chess_board);
     //w.show();
     return a.exec();
 }
