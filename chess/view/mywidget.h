@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include<QMouseEvent>
+#include <QPushButton>
 #include"../common/etlbase.h"
 
 #include"../common/Board.h"
@@ -38,6 +39,8 @@ public:
 private:
 
     Ui::MyWidget *ui;
+    QPushButton * back_button;
+    QPushButton * close_button;
     std::shared_ptr<ICommandBase> move_command;
     std::shared_ptr<ICommandBase> flip_over_command;
     std::shared_ptr<ICommandBase> move_command_f;
