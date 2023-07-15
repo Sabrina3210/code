@@ -7,6 +7,7 @@ my_vm::my_vm()
     move_command_f=std::make_shared<movechesscommand_f>(this);
     restartcommand=std::make_shared<restartCommand>(this);
     backcommand=std::make_shared<backCommand>(this);
+    f_restartcommand=std::make_shared<f_restartCommand>(this);
     m_sink_property=std::make_shared<ViewModelSink>(this);
 }
 my_vm::~my_vm()
@@ -32,6 +33,10 @@ std::shared_ptr<ICommandBase> my_vm::get_move_command_f() throw()
 std::shared_ptr<ICommandBase> my_vm::get_restart_command() throw()
 {
     return std::static_pointer_cast<ICommandBase>(restartcommand);
+}
+std::shared_ptr<ICommandBase> my_vm::get_f_restart_command() throw()
+{
+    return std::static_pointer_cast<ICommandBase>(f_restartcommand);
 }
 std::shared_ptr<ICommandBase> my_vm::get_back_command() throw()
 {
@@ -60,6 +65,10 @@ bool my_vm::movechess_f(int x,int y, int id)
 bool my_vm::restart()
 {
     return Model->restart();
+}
+bool my_vm::f_restart()
+{
+    return Model->f_restart();
 }
 bool my_vm::backchess()
 {

@@ -15,6 +15,7 @@ public:
     bool flipoverchess(int select_id);
     bool movechess_f(int ed_x,int ed_y, int select_id);
     bool restart();
+    bool f_restart();
     bool RecoverLastStep();
     //    bool restart(int row, int col, int boom_num);
     //    bool leftblock(int x_pos, int y_pos);
@@ -33,6 +34,7 @@ private:
     bool CanMoveBing(int st_x, int st_y, int ed_x, int ed_y, bool IsRed);
 
     int JudgeWin();
+    int F_JudgeWin();
     int StoneInPos(int pos_x, int pos_y);
     int NumChessPassBy(int st_x, int st_y, int ed_x, int ed_y);
     int PosChange(int st_x, int st_y, int ed_x, int ed_y);
@@ -40,8 +42,6 @@ private:
     bool IfPosInSudoku(int pos_x, int pos_y, bool IsRed);
     bool IfPosInOwnCamp(int pos_x, int pos_y, bool IsRed);
 
-
-    bool F_Can_Move_Pao(int st_x, int st_y, int ed_x, int ed_y, bool IsRed);
     bool F_Can_Move_Chess(int st_x, int st_y, int ed_x, int ed_y, bool IsRed);
     int F_StoneInPos(int pos_x, int pos_y);
     int F_NumChessPassBy(int st_x, int st_y, int ed_x, int ed_y);

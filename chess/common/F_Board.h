@@ -22,6 +22,8 @@ class F_Board{
 public:
     F_Board();
     ~F_Board();
+    bool now_camp_red;
+    void init();
     F_Stone* getstone();
     bool cover[32];
 private:

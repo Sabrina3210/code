@@ -14,6 +14,7 @@ SOURCES += \
     common/Board.cpp \
     view/mymainwindow.cpp \
     viewmodel/commands/backcommand.cpp \
+    viewmodel/commands/f_restartcommand.cpp \
     viewmodel/commands/flipoverChessCommand.cpp \
     viewmodel/commands/moveStoneCommand.cpp \
     viewmodel/commands/moveStoneCommand_f.cpp \
@@ -34,6 +35,7 @@ HEADERS += \
     common/step.h \
     view/mymainwindow.h \
     viewmodel/commands/backcommand.h \
+    viewmodel/commands/f_restartcommand.h \
     viewmodel/commands/flipoverChessCommand.h \
     viewmodel/commands/moveStoneCommand.h \
     viewmodel/commands/moveStoneCommand_f.h \

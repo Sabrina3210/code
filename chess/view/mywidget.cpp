@@ -13,12 +13,17 @@ MainWidget::MainWidget(QWidget *parent)
         setMaximumSize(10000, 8000);
         this->back_button = new QPushButton("悔棋",this);
         this->restart_button = new QPushButton("重启",this);
+        this->f_restart_button = new QPushButton("重启",this);
         this->close_button = new QPushButton("结束游戏",this);
         this->back_button->setGeometry(width() * 4 / 5, height() / 2 - 50, 100, 40);
         this->restart_button->setGeometry(width() * 4 / 5, height() / 2, 100, 40);
+        this->f_restart_button->setGeometry(width() * 4 / 5, height() / 2 + 50, 100, 40);
         this->close_button->setGeometry(width() * 4 / 5, height() / 2 + 50, 100, 40);
         connect(this->back_button, &QPushButton::clicked, [=]{
             back_command->Exec();
+        });
+        connect(this->f_restart_button, &QPushButton::clicked, [=]{
+            f_restart_command->Exec();
         });
         connect(this->restart_button, &QPushButton::clicked, [=]{
             restart_command->Exec();
@@ -183,6 +188,10 @@ void MainWidget::set_restart_command(const std::shared_ptr<ICommandBase>& cmd)
 {
     restart_command=cmd;
 }
+void MainWidget::set_f_restart_command(const std::shared_ptr<ICommandBase>& cmd)
+{
+    f_restart_command=cmd;
+}
 void MainWidget::set_back_command(const std::shared_ptr<ICommandBase>& cmd)
 {
     back_command=cmd;
@@ -198,6 +207,8 @@ void MainWidget::paintEvent(QPaintEvent *)
     {
         this->setMaximumSize(10000, 8000);
         this->back_button->show();
+        this->restart_button->show();
+        this->f_restart_button->hide();
         this->back_button->setGeometry(width() * 4 / 5, height() / 2 - 50, 100, 40);
         this->restart_button->setGeometry(width() * 4 / 5, height() / 2, 100, 40);
         this->close_button->setGeometry(width() * 4 / 5, height() / 2 + 50, 100, 40);
@@ -206,7 +217,9 @@ void MainWidget::paintEvent(QPaintEvent *)
     {
         this->setMaximumSize(1000, 800);
         this->back_button->hide();
-        this->restart_button->setGeometry(width() * 4 / 5, height() / 2 - 50, 100, 40);
+        this->f_restart_button->show();
+        this->restart_button->hide();
+        this->f_restart_button->setGeometry(width() * 4 / 5, height() / 2 - 50, 100, 40);
         this->close_button->setGeometry(width() * 4 / 5, height() / 2 + 50, 100, 40);
     }
     //画10横线

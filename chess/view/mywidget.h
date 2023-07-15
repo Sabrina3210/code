@@ -31,6 +31,7 @@ public:
     void set_flip_over_command(const std::shared_ptr<ICommandBase>& cmd);
     void set_move_command_f(const std::shared_ptr<ICommandBase>& cmd);
     void set_restart_command(const std::shared_ptr<ICommandBase>& cmd);
+    void set_f_restart_command(const std::shared_ptr<ICommandBase>& cmd);
     void set_back_command(const std::shared_ptr<ICommandBase>& cmd);
     void set_board(const std:: shared_ptr<Board> b);
     void set_FBoard(const std:: shared_ptr<F_Board> f);
@@ -41,12 +42,14 @@ private:
 
     Ui::MyWidget *ui;
     QPushButton * back_button;
+    QPushButton * f_restart_button;
     QPushButton * restart_button;
     QPushButton * close_button;
     std::shared_ptr<ICommandBase> move_command;
     std::shared_ptr<ICommandBase> flip_over_command;
     std::shared_ptr<ICommandBase> move_command_f;
     std::shared_ptr<ICommandBase> restart_command;
+    std::shared_ptr<ICommandBase> f_restart_command;
     std::shared_ptr<ICommandBase> back_command;
     std::shared_ptr<Board> board;
     std::shared_ptr<F_Board> FBoard;

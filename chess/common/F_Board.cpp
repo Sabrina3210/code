@@ -24,11 +24,36 @@ F_Board::F_Board()
         chess[i]._col=a[i]%4+1;
         chess[i]._id=i;
     }
-
+    now_camp_red = true;
 }
 F_Board::~F_Board()
 {
 
+}
+
+void F_Board::init()
+{
+    unsigned seed;
+    seed=time(0);
+    srand(seed);
+    int a[32];
+    for(int i=0;i<32;i++)
+    {
+        a[i]=i;
+        cover[i]=false;
+    }
+    for(int i=31;i>=1;i--)
+    {
+        std::swap(a[i],a[rand()%i]);
+    }
+    for(int i=0; i<32; ++i)
+    {
+        chess[i].init(i);
+        chess[i]._row=a[i]/4+1;
+        chess[i]._col=a[i]%4+1;
+        chess[i]._id=i;
+    }
+    now_camp_red = true;
 }
 F_Stone* F_Board::getstone()
 {

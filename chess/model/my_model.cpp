@@ -291,6 +291,7 @@ bool MyModel::flipoverchess(int select_id)
     {
         f->cover[select_id]=true;
         std::string flip_str="fliped";
+        f->now_camp_red = !f->now_camp_red;
         Fire_OnPropertyChanged(flip_str);
         return true;
     }
@@ -313,6 +314,33 @@ int MyModel::JudgeWin()
                 return -1;
             }
         }
+    }
+    return 0;
+}
+
+int MyModel::F_JudgeWin()
+{
+    int cnt_black = 16;
+    int cnt_red = 16;
+    for(int i = 0; i < 32; i++)
+    {
+        F_Stone tmp = f->getstone()[i];
+        if(tmp._red && tmp._dead){
+            cnt_red--;
+
+        }
+        if(!tmp._red && tmp._dead){
+            cnt_black--;
+
+        }
+    }
+    if(cnt_red == 0){
+        std::cout <<  "black_win" << std::endl;
+        return -1;
+    }
+    if(cnt_black == 0){
+        std::cout << "red_win" << std::endl;
+        return 1;
     }
     return 0;
 }
@@ -580,262 +608,173 @@ bool MyModel::RecoverLastStep()
 bool MyModel::movechess_f(int ed_x,int ed_y, int select_id)
 {
     //function
-    bool &now_camp_red = b->now_camp_is_red;
     F_Stone &now_stone = f->getstone()[select_id];
     int st_x = now_stone._row;
     int st_y = now_stone._col;
     int now_type = now_stone._type;
     bool IsRed = now_stone._red;
-    if(IsRed != now_camp_red)
+    if(IsRed != f->now_camp_red)
         return false;
     int end_index = F_StoneInPos(ed_x, ed_y);  //返回当前坐标棋子的下标，没有返回-1
+    int start_index = F_StoneInPos(st_x, st_y);
+    F_Stone &start_stone = f->getstone()[start_index];
     F_Stone &end_stone = f->getstone()[end_index];
 
     switch (now_type)
     {
 
-    case 0:// che
+    case 0: case 1: case 3: case 4: case 5: case 6:// che ma bing jiang shi xiang
         if(F_Can_Move_Chess(st_x, st_y, ed_x, ed_y, IsRed))
         {
             if(end_index < 0)
             {
-                now_stone._row = ed_x;
-                now_stone._col = ed_y;
-                std::string str="move_f";
-                Fire_OnPropertyChanged( str);
-                now_camp_red = !now_camp_red;
-                return true;
-            }
-            else
-            {
-                if(IsRed == end_stone._red)
-                {
-                    return false;
-                }
-                else
+                if(abs(st_x-ed_x)==1 || abs(st_y-ed_y)==1)
                 {
                     now_stone._row = ed_x;
                     now_stone._col = ed_y;
-                    end_stone._row = -1;
-                    end_stone._col = -1;
-                    end_stone._dead = true;
                     std::string str="move_f";
                     Fire_OnPropertyChanged( str);
-                    now_camp_red = !now_camp_red;
+                    f->now_camp_red = !f->now_camp_red;
+                    if(F_JudgeWin() == 1)
+                    {
+                        std::string win_str="f_red_win";
+                        Fire_OnPropertyChanged(win_str);
+                    }
+                    else if(F_JudgeWin() == -1)
+                    {
+                        std::string win_str="f_black_win";
+                        Fire_OnPropertyChanged(win_str);
+                    }
                     return true;
                 }
+                return false;
             }
-        }
-        break;
-
-    case 1:// ma
-        if(F_Can_Move_Chess(st_x, st_y, ed_x, ed_y, IsRed))
-        {
-            if(end_index < 0)
+            else if(end_index >= 0 && f->cover[end_index])
             {
-                now_stone._row = ed_x;
-                now_stone._col = ed_y;
-                std::string str="move_f";
-                Fire_OnPropertyChanged( str);
-                now_camp_red = !now_camp_red;
-                return true;
-            }
-            else
-            {
-                if(IsRed == end_stone._red)
+                if(IsRed != end_stone._red)
                 {
-                    return false;
+                    if(start_stone._level == 1 && end_stone._level ==7){
+                        now_stone._row = ed_x;
+                        now_stone._col = ed_y;
+                        end_stone._row = -1;
+                        end_stone._col = -1;
+                        end_stone._dead = true;
+                        std::string str="move_f";
+                        Fire_OnPropertyChanged( str);
+                        f->now_camp_red = !f->now_camp_red;
+                        if(F_JudgeWin() == 1)
+                        {
+                            std::string win_str="f_red_win";
+                            Fire_OnPropertyChanged(win_str);
+                        }
+                        else if(F_JudgeWin() == -1)
+                        {
+                            std::string win_str="f_black_win";
+                            Fire_OnPropertyChanged(win_str);
+                        }
+                        return true;
+                    }else if(start_stone._level >= end_stone._level ){
+                        now_stone._row = ed_x;
+                        now_stone._col = ed_y;
+                        end_stone._row = -1;
+                        end_stone._col = -1;
+                        end_stone._dead = true;
+                        std::string str="move_f";
+                        Fire_OnPropertyChanged( str);
+                        f->now_camp_red = !f->now_camp_red;
+                        if(F_JudgeWin() == 1)
+                        {
+                            std::string win_str="f_red_win";
+                            Fire_OnPropertyChanged(win_str);
+                        }
+                        else if(F_JudgeWin() == -1)
+                        {
+                            std::string win_str="f_black_win";
+                            Fire_OnPropertyChanged(win_str);
+                        }
+                        return true;
+                    }
                 }
-                else
-                {
-                    now_stone._row = ed_x;
-                    now_stone._col = ed_y;
-                    end_stone._row = -1;
-                    end_stone._col = -1;
-                    end_stone._dead = true;
-                    std::string str="move_f";
-                    Fire_OnPropertyChanged( str);
-                    now_camp_red = !now_camp_red;
-                    return true;
-                }
+                return false;
             }
         }
         break;
 
     case 2:// pao
-        if(F_Can_Move_Pao(st_x, st_y, ed_x, ed_y, IsRed))
+        if(F_Can_Move_Chess(st_x, st_y, ed_x, ed_y, IsRed))
         {
             if(end_index < 0)
             {
+                if(abs(st_x-ed_x)==1 || abs(st_y-ed_y)==1)
+                {
+                    now_stone._row = ed_x;
+                    now_stone._col = ed_y;
+                    std::string str="move_f";
+                    Fire_OnPropertyChanged( str);
+                    f->now_camp_red = !f->now_camp_red;
+                    if(F_JudgeWin() == 1)
+                    {
+                        std::string win_str="f_red_win";
+                        Fire_OnPropertyChanged(win_str);
+                    }
+                    else if(F_JudgeWin() == -1)
+                    {
+                        std::string win_str="f_black_win";
+                        Fire_OnPropertyChanged(win_str);
+                    }
+                    return true;
+                }
+                return false;
+            }
+            else if(end_index >= 0 && f->cover[end_index])
+            {
+                if(F_NumChessPassBy(st_x, st_y, ed_x, ed_y) == 1 && IsRed != end_stone._red)
+                {
+                    now_stone._row = ed_x;
+                    now_stone._col = ed_y;
+                    end_stone._row = -1;
+                    end_stone._col = -1;
+                    end_stone._dead = true;
+                    std::string str="move_f";
+                    Fire_OnPropertyChanged( str);
+                    f->now_camp_red = !f->now_camp_red;
+                    if(F_JudgeWin() == 1)
+                    {
+                        std::string win_str="f_red_win";
+                        Fire_OnPropertyChanged(win_str);
+                    }
+                    else if(F_JudgeWin() == -1)
+                    {
+                        std::string win_str="f_black_win";
+                        Fire_OnPropertyChanged(win_str);
+                    }
+                    return true;
+                }
+                return false;
+            }else if(end_index >= 0 && !f->cover[end_index]){
                 if(F_NumChessPassBy(st_x, st_y, ed_x, ed_y) == 1)
                 {
-                    return false;
-                }
-                now_stone._row = ed_x;
-                now_stone._col = ed_y;
-                std::string str="move_f";
-                Fire_OnPropertyChanged( str);
-                now_camp_red = !now_camp_red;
-                return true;
-            }
-            else
-            {
-                if(IsRed == end_stone._red)
-                {
-                    return false;
-                }
-                else
-                {
-                    if(F_NumChessPassBy(st_x, st_y, ed_x, ed_y) == 0)
+                    now_stone._row = ed_x;
+                    now_stone._col = ed_y;
+                    end_stone._row = -1;
+                    end_stone._col = -1;
+                    end_stone._dead = true;
+                    std::string str="move_f";
+                    Fire_OnPropertyChanged( str);
+                    f->now_camp_red = !f->now_camp_red;
+                    if(F_JudgeWin() == 1)
                     {
-                        return false;
+                        std::string win_str="f_red_win";
+                        Fire_OnPropertyChanged(win_str);
                     }
-                    now_stone._row = ed_x;
-                    now_stone._col = ed_y;
-                    end_stone._row = -1;
-                    end_stone._col = -1;
-                    end_stone._dead = true;
-                    std::string str="move_f";
-                    Fire_OnPropertyChanged( str);
-                    now_camp_red = !now_camp_red;
+                    else if(F_JudgeWin() == -1)
+                    {
+                        std::string win_str="f_black_win";
+                        Fire_OnPropertyChanged(win_str);
+                    }
                     return true;
                 }
-            }
-        }
-        break;
-
-    case 3:// bing
-        if(F_Can_Move_Chess(st_x, st_y, ed_x, ed_y, IsRed))
-        {
-            if(end_index < 0)
-            {
-                now_stone._row = ed_x;
-                now_stone._col = ed_y;
-                std::string str="move_f";
-                Fire_OnPropertyChanged( str);
-                now_camp_red = !now_camp_red;
-                return true;
-            }
-            else
-            {
-                if(IsRed == end_stone._red)
-                {
-                    return false;
-                }
-                else
-                {
-                    now_stone._row = ed_x;
-                    now_stone._col = ed_y;
-                    end_stone._row = -1;
-                    end_stone._col = -1;
-                    end_stone._dead = true;
-                    std::string str="move_f";
-                    Fire_OnPropertyChanged( str);
-                    now_camp_red = !now_camp_red;
-                    return true;
-                }
-            }
-        }
-        break;
-
-    case 4:// jiang
-        if(F_Can_Move_Chess(st_x, st_y, ed_x, ed_y, IsRed))
-        {
-            if(end_index < 0)
-            {
-                now_stone._row = ed_x;
-                now_stone._col = ed_y;
-                std::string str="move_f";
-                Fire_OnPropertyChanged( str);
-                now_camp_red = !now_camp_red;
-                return true;
-            }
-            else
-            {
-                if(IsRed == end_stone._red)
-                {
-                    return false;
-                }
-                else
-                {
-                    now_stone._row = ed_x;
-                    now_stone._col = ed_y;
-                    end_stone._row = -1;
-                    end_stone._col = -1;
-                    end_stone._dead = true;
-                    std::string str="move_f";
-                    Fire_OnPropertyChanged( str);
-                    now_camp_red = !now_camp_red;
-                    return true;
-                }
-            }
-        }
-        break;
-
-    case 5:// shi
-        if(F_Can_Move_Chess(st_x, st_y, ed_x, ed_y, IsRed))
-        {
-            if(end_index < 0)
-            {
-                now_stone._row = ed_x;
-                now_stone._col = ed_y;
-                std::string str="move_f";
-                Fire_OnPropertyChanged( str);
-                now_camp_red = !now_camp_red;
-                return true;
-            }
-            else
-            {
-                if(IsRed == end_stone._red)
-                {
-                    return false;
-                }
-                else
-                {
-                    now_stone._row = ed_x;
-                    now_stone._col = ed_y;
-                    end_stone._row = -1;
-                    end_stone._col = -1;
-                    end_stone._dead = true;
-                    std::string str="move_f";
-                    Fire_OnPropertyChanged( str);
-                    now_camp_red = !now_camp_red;
-                    return true;
-                }
-            }
-        }
-        break;
-
-    case 6:// xiang
-        if(F_Can_Move_Chess(st_x, st_y, ed_x, ed_y, IsRed))
-        {
-            if(end_index < 0)
-            {
-                now_stone._row = ed_x;
-                now_stone._col = ed_y;
-                std::string str="move_f";
-                Fire_OnPropertyChanged( str);
-                now_camp_red = !now_camp_red;
-                return true;
-            }
-            else
-            {
-                if(IsRed == end_stone._red)
-                {
-                    return false;
-                }
-                else
-                {
-                    now_stone._row = ed_x;
-                    now_stone._col = ed_y;
-                    end_stone._row = -1;
-                    end_stone._col = -1;
-                    end_stone._dead = true;
-                    std::string str="move_f";
-                    Fire_OnPropertyChanged( str);
-                    now_camp_red = !now_camp_red;
-                    return true;
-                }
+                return false;
             }
         }
         break;
@@ -845,11 +784,19 @@ bool MyModel::movechess_f(int ed_x,int ed_y, int select_id)
     }
     return false;
 }
+
 bool MyModel::restart()
 {
     b->init();
     record.clear();
     std::string str="restart";
+    Fire_OnPropertyChanged( str);
+    return true;
+}
+bool MyModel::f_restart()
+{
+    f->init();
+    std::string str="f_restart";
     Fire_OnPropertyChanged( str);
     return true;
 }
@@ -913,42 +860,12 @@ bool MyModel::F_IfPosInBoard(int pos_x, int pos_y)
         return false;
 }
 
-bool MyModel::F_Can_Move_Pao(int st_x, int st_y, int ed_x, int ed_y, bool IsRed)
+bool MyModel::F_Can_Move_Chess(int st_x, int st_y, int ed_x, int ed_y, bool IsRed)
 {
     if(!F_IfPosInBoard(ed_x, ed_y))
         return false;
     if(st_x == ed_x || st_y == ed_y){
         return true;
-    }
-    return false;
-}
-
-bool MyModel::F_Can_Move_Chess(int st_x, int st_y, int ed_x, int ed_y, bool IsRed)
-{
-    if(!F_IfPosInBoard(ed_x, ed_y))
-        return false;
-    int start_index = F_StoneInPos(st_x, st_y);
-    F_Stone &start_stone = f->getstone()[start_index];
-    int end_index = F_StoneInPos(ed_x, ed_y);
-    F_Stone &end_stone = f->getstone()[end_index];
-    if(st_x == ed_x){
-        if(abs(st_y-ed_y) == 1 ){
-            if(start_stone._level == 1){
-                if(end_stone._level == 7 || end_stone._level == 1) return true;
-            }else if(end_stone._level <= start_stone._level){
-                return true;
-            }
-            return false;
-        }
-    }else if(st_y == ed_y){
-        if(abs(st_x-ed_x) == 1 ){
-            if(start_stone._level == 1){
-                if(end_stone._level == 7 || end_stone._level == 1) return true;
-            }else if(end_stone._level <= start_stone._level){
-                return true;
-            }
-            return false;
-        }
     }
     return false;
 }

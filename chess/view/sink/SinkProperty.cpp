@@ -32,4 +32,16 @@ void SinkProperty::OnPropertyChanged(const std::string& str)
     {
         m_pW->update();
     }
+    if(str=="f_red_win")
+    {
+        QMessageBox::information(NULL,"游戏结束","红方胜利!");
+    }
+    if(str=="f_black_win")
+    {
+        QMessageBox::information(NULL,"游戏结束","黑方胜利!");
+    }
+    if(str=="f_restart")
+    {
+        m_pW->update();
+    }
 }
