@@ -19,6 +19,25 @@
   <property name="windowTitle">
    <string>MyWidget</string>
   </property>
+  <widget class="QLabel" name="rule_picture">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>350</y>
+     <width>1001</width>
+     <height>401</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">image: url(:/new/prefix1/picture_source/rule.png);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

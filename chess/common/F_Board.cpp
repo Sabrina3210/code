@@ -118,16 +118,16 @@ void F_Stone::init(int id)
         F_Stone::TYPE type;
         int level;
     } pos[32] = {
-    {1, 1, F_Stone::CHE,3},
-    {2, 1, F_Stone::MA,4},
+    {1, 1, F_Stone::CHE,4},
+    {2, 1, F_Stone::MA,3},
     {3, 1, F_Stone::XIANG,5},
     {4, 1, F_Stone::SHI,6},
     {5, 1, F_Stone::JIANG,7},
     {6, 1, F_Stone::SHI,6},
     {7, 1, F_Stone::XIANG,5},
-    {8, 1, F_Stone::MA,4},
+    {8, 1, F_Stone::MA,3},
 
-    {8, 2, F_Stone::CHE,3},
+    {8, 2, F_Stone::CHE,4},
     {1, 2, F_Stone::PAO,2},
     {2, 2, F_Stone::PAO,2},
     {3, 2, F_Stone::BING,1},
@@ -136,16 +136,16 @@ void F_Stone::init(int id)
     {6, 2, F_Stone::BING,1},
     {7, 2, F_Stone::BING,1},
 
-        {1, 3, F_Stone::CHE,3},
-        {2, 3, F_Stone::MA,4},
+        {1, 3, F_Stone::CHE,4},
+        {2, 3, F_Stone::MA,3},
         {3, 3, F_Stone::XIANG,5},
         {4, 3, F_Stone::SHI,6},
         {5, 3, F_Stone::JIANG,7},
         {6, 3, F_Stone::SHI,6},
         {7, 3, F_Stone::XIANG,5},
-        {8, 3, F_Stone::MA,4},
+        {8, 3, F_Stone::MA,3},
 
-        {8, 4, F_Stone::CHE,3},
+        {8, 4, F_Stone::CHE,4},
         {1, 4, F_Stone::PAO,2},
         {2, 4, F_Stone::PAO,2},
         {3, 4, F_Stone::BING,1},

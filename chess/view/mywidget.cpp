@@ -209,9 +209,27 @@ void MainWidget::paintEvent(QPaintEvent *)
         this->back_button->show();
         this->restart_button->show();
         this->f_restart_button->hide();
-        this->back_button->setGeometry(width() * 4 / 5, height() / 2 - 50, 100, 40);
+        this->back_button->setGeometry(width() * 4 / 5, height() / 2 - 100, 100, 40);
         this->restart_button->setGeometry(width() * 4 / 5, height() / 2, 100, 40);
-        this->close_button->setGeometry(width() * 4 / 5, height() / 2 + 50, 100, 40);
+        this->close_button->setGeometry(width() * 4 / 5, height() / 2 + 100, 100, 40);
+        QFont font("Arial", 12);
+        font.setPointSize(16);
+        painter.setFont(font);
+        if(board->now_camp_is_red)
+        {
+            QRect rect_chess(width() * 4 / 5 - 25, height() / 2 - 300, 150, 60);
+            painter.setPen(Qt::red);
+            QString word = "红方执棋";
+            painter.drawText(rect_chess, Qt::AlignCenter, word);
+        }
+        else
+        {
+            QRect rect_chess(width() * 4 / 5 - 25, height() / 2 - 300, 150, 60);
+            painter.setPen(Qt::black);
+            QString word = "黑方执棋";
+            painter.drawText(rect_chess, Qt::AlignCenter, word);
+        }
+
     }
     else
     {
@@ -219,13 +237,31 @@ void MainWidget::paintEvent(QPaintEvent *)
         this->back_button->hide();
         this->f_restart_button->show();
         this->restart_button->hide();
-        this->f_restart_button->setGeometry(width() * 4 / 5, height() / 2 - 50, 100, 40);
-        this->close_button->setGeometry(width() * 4 / 5, height() / 2 + 50, 100, 40);
+        QFont font("Arial", 10);
+        font.setPointSize(16);
+        painter.setFont(font);
+        if(FBoard->now_camp_red)
+        {
+            QRect rect_chess(width() * 4 / 5 - 25, 50, 150, 60);
+            painter.setPen(Qt::red);
+            QString word = "红方执棋";
+            painter.drawText(rect_chess, Qt::AlignCenter, word);
+        }
+        else
+        {
+            QRect rect_chess(width() * 4 / 5 - 25, 50, 150, 60);
+            painter.setPen(Qt::black);
+            QString word = "黑方执棋";
+            painter.drawText(rect_chess, Qt::AlignCenter, word);
+        }
+        this->f_restart_button->setGeometry(width() * 4 / 5, 150, 100, 40);
+        this->close_button->setGeometry(width() * 4 / 5, 250, 100, 40);
     }
     //画10横线
     int d = this->height() / 11;
     if(game_type)
     {
+        ui->rule_picture->hide();
         for(int i=1;i<11;i++)
         {
             painter.drawLine(QPoint(d,i*d),QPoint(9*d,i*d));
@@ -406,6 +442,7 @@ void MainWidget::paintEvent(QPaintEvent *)
     }
     else
     {
+        ui->rule_picture->show();
         for(int i=1;i<6;i++)
         {
             painter.drawLine(QPoint(0.5*d,(i-0.5)*d),QPoint(8.5*d,(i-0.5)*d));
@@ -430,6 +467,7 @@ void MainWidget::drawchess(QPainter& painter,int id,bool type)
         Stone* chess=board->getstone();
          //qDebug("%d",board->chess[id]._id);
         if(chess[id]._dead==true) return;
+        painter.setBrush(Qt::black);
         painter.drawEllipse((chess[id]._row-0.5)*d,(chess[id]._col-0.5)*d,d,d);
 
 
@@ -464,6 +502,7 @@ void MainWidget::drawchess(QPainter& painter,int id,bool type)
         F_Stone* chess=FBoard->getstone();
             //qDebug("%d",board->chess[id]._id);
         if(chess[id]._dead==true) return;
+        painter.setBrush(Qt::black);
         painter.drawEllipse((chess[id]._row-0.5)*d,(chess[id]._col-0.5)*d,d,d);
 
         if(FBoard->cover[id])
@@ -492,6 +531,7 @@ void MainWidget::drawchess(QPainter& painter,int id,bool type)
             QString word = chess[id].name();
             painter.drawText(rect_chess, Qt::AlignCenter, word);
         }
+        painter.setPen(Qt::black);
     }
 
 }

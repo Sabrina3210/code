@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/new/prefix1">
         <file>picture_source/background_proc.jpg</file>
+        <file>picture_source/rule.png</file>
     </qresource>
 </RCC>
